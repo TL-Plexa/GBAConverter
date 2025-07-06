@@ -153,7 +153,21 @@ namespace LiveSplit.UI.Components
         public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
             var currentTime = state.CurrentTime.RealTime ?? state.CurrentTime.GameTime ?? TimeSpan.Zero;
-            var convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks * CONVERSION_FACTOR));
+
+            TimeSpan convertedTime;
+            if (Settings.ConvertGBAToNSO)
+            {
+                // GBA > NSO: multiply by the factor
+                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks * CONVERSION_FACTOR));
+            }
+            else
+            {
+                // NSO > GBA: divide by the factor (current behavior)
+                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks / CONVERSION_FACTOR));
+            }
+
+            // Also update the component name dynamically
+            InternalComponent.InformationName = Settings.ConvertGBAToNSO ? "NSO Time" : "GBA Time";
 
             string timeFormat = GetTimeFormat(convertedTime);
             string timeString = convertedTime.ToString(timeFormat);

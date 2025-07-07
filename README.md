@@ -1,5 +1,5 @@
 # GBAConverter
-Time converter Livesplit component for live conversion between NSO and GBA (works both ways!).
+Livesplit component for live conversion between NSO and GBA times (works both ways!).
 
 Add LiveSplit.GBAConverter.dll to the Components directory within LiveSplit. Restart LiveSplit. Now when you go to Edit Layout > Information there should be a new option "GBA Converter". This will add the live GBA time conversion to your layout. It will have the usual customization options (color, accuracy). The component is highlighted in green in the image below. 
 

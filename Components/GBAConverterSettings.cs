@@ -145,24 +145,42 @@ namespace LiveSplit.UI.Components
 
         private void GBAConverterSettings_Load(object sender, EventArgs e)
         {
+            // Handle the two rows setting based on mode
             if (Mode == LayoutMode.Horizontal)
             {
                 chkTwoRows.Enabled = false;
-                chkTwoRows.DataBindings.Clear();
                 chkTwoRows.Checked = true;
             }
             else
             {
                 chkTwoRows.Enabled = true;
-                chkTwoRows.DataBindings.Clear();
-                chkTwoRows.DataBindings.Add("Checked", this, "Display2Rows", false, DataSourceUpdateMode.OnPropertyChanged);
+                // Only bind if not already bound
+                if (chkTwoRows.DataBindings.Count == 0)
+                {
+                    chkTwoRows.DataBindings.Add("Checked", this, "Display2Rows", false, DataSourceUpdateMode.OnPropertyChanged);
+                }
             }
 
-            // Set up data bindings
-            chkDropDecimals.DataBindings.Add("Checked", this, "DropDecimals", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkOverrideTextColor.DataBindings.Add("Checked", this, "OverrideTextColor", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkOverrideTimeColor.DataBindings.Add("Checked", this, "OverrideTimeColor", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkConvertDirection.DataBindings.Add("Checked", this, "ConvertGBAToNSO", false, DataSourceUpdateMode.OnPropertyChanged); 
+            // Set up data bindings only if they don't already exist
+            if (chkDropDecimals.DataBindings.Count == 0)
+            {
+                chkDropDecimals.DataBindings.Add("Checked", this, "DropDecimals", false, DataSourceUpdateMode.OnPropertyChanged);
+            }
+
+            if (chkOverrideTextColor.DataBindings.Count == 0)
+            {
+                chkOverrideTextColor.DataBindings.Add("Checked", this, "OverrideTextColor", false, DataSourceUpdateMode.OnPropertyChanged);
+            }
+
+            if (chkOverrideTimeColor.DataBindings.Count == 0)
+            {
+                chkOverrideTimeColor.DataBindings.Add("Checked", this, "OverrideTimeColor", false, DataSourceUpdateMode.OnPropertyChanged);
+            }
+
+            if (chkConvertDirection.DataBindings.Count == 0)
+            {
+                chkConvertDirection.DataBindings.Add("Checked", this, "ConvertGBAToNSO", false, DataSourceUpdateMode.OnPropertyChanged);
+            }
 
             // Set initial radio button states
             UpdateAccuracyRadioButtons();
@@ -173,6 +191,7 @@ namespace LiveSplit.UI.Components
             btnTextColor.Enabled = OverrideTextColor;
             btnTimeColor.Enabled = OverrideTimeColor;
 
+            // Update the description label
             UpdateDescriptionLabel();
         }
 

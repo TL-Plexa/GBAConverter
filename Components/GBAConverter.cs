@@ -157,13 +157,13 @@ namespace LiveSplit.UI.Components
             TimeSpan convertedTime;
             if (Settings.ConvertGBAToNSO)
             {
-                // GBA > NSO: multiply by the factor
-                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks * CONVERSION_FACTOR));
+                // GBA > NSO: divide by the factor
+                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks / CONVERSION_FACTOR));
             }
             else
             {
-                // NSO > GBA: divide by the factor (current behavior)
-                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks / CONVERSION_FACTOR));
+                // NSO > GBA: multiply by the factor
+                convertedTime = TimeSpan.FromTicks((long)(currentTime.Ticks * CONVERSION_FACTOR));
             }
 
             // Also update the component name dynamically
